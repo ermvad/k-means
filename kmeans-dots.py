@@ -1,16 +1,15 @@
 import numpy
-from PIL import Image
 import csv
 import matplotlib.pyplot as plt
-import math
-from mpl_toolkits.mplot3d import Axes3D
 
 filename = "dots.csv"
 clusters = 3
 epsilon = 2
 
+
 def euclidian(a, b):
     return numpy.linalg.norm(a - b)
+
 
 def kmeans(data, cl, eps=1):
     centers = data[:cl]
@@ -41,6 +40,7 @@ def main():
     plt.scatter(cords[:, 0], cords[:, 1], color='g')
     plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], color='r')
     plt.show()
+
 
 if __name__ == "__main__":
     main()
