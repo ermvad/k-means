@@ -3,7 +3,7 @@ import csv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-filename = "dots.csv"
+filename = "dots_3d.csv"
 clusters = 3
 epsilon = 2
 
@@ -30,15 +30,17 @@ def kmeans(data, cl, eps=1):
 
 
 def main():
-    cords = numpy.zeros((0, 2))
+    cords = numpy.zeros((0, 3))
     with open(filename, "r", newline="") as file:
         reader = csv.reader(file)
         for row in reader:
-            cords = numpy.append(cords, [[int(row[0]), int(row[1])]], axis=0)
+            cords = numpy.append(cords, [[int(row[0]), int(row[1]), int(row[2])]], axis=0)
     
     kmeans_centers = kmeans(cords, clusters, epsilon)
-    plt.scatter(cords[:, 0], cords[:, 1], color='g')
-    plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], color='r')
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.scatter(cords[:, 0], cords[:, 1], cords[:, 2], color='g')
+    ax.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], kmeans_centers[:, 2], color='r')
     plt.show()
 
 
