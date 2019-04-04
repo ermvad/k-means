@@ -1,7 +1,7 @@
 import numpy
+import math
 import csv
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 filename = "dots.csv"
 clusters = 3
@@ -9,7 +9,7 @@ epsilon = 2
 
 
 def euclidian(a, b):
-    return numpy.linalg.norm(a - b)
+    return math.sqrt(numpy.sum((a - b)**2))
 
 
 def kmeans(data, cl, eps=1):
@@ -23,7 +23,7 @@ def kmeans(data, cl, eps=1):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
-        if(numpy.mean(new_centers - centers) < eps):
+        if numpy.mean(new_centers - centers) < eps:
             break
         centers = new_centers
     return new_centers

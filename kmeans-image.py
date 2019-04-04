@@ -1,4 +1,5 @@
 import numpy
+import math
 import matplotlib.pyplot as plt
 from PIL import Image
 from mpl_toolkits.mplot3d import Axes3D
@@ -8,7 +9,7 @@ epsilon = 2
 
 
 def euclidian(a, b):
-    return numpy.linalg.norm(a - b)
+    return math.sqrt(numpy.sum((a - b)**2))
 
 
 def kmeans(data, cl, eps=1):
@@ -22,7 +23,7 @@ def kmeans(data, cl, eps=1):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
-        if(numpy.mean(new_centers - centers) < eps):
+        if numpy.mean(new_centers - centers) < eps:
             break
         centers = new_centers
     return new_centers
@@ -44,7 +45,7 @@ def main():
     ax.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], kmeans_centers[:, 2], color='r')
     
     for i in range(kmeans_centers.shape[0]):
-        result = Image.new("RGB", (20,20), (int(kmeans_centers[i][0]), int(kmeans_centers[i][1]), int(kmeans_centers[i][2])))
+        result = Image.new("RGB", (50,50), (int(kmeans_centers[i][0]), int(kmeans_centers[i][1]), int(kmeans_centers[i][2])))
         result.show()
     plt.show()
             
