@@ -23,7 +23,7 @@ def kmeans(data, cl, eps=1):
             for c in range(cl):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
-        new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
+        new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)], dtype=int)
         if numpy.mean(new_centers - centers) < eps:
             break
         centers = new_centers
@@ -47,14 +47,24 @@ def main():
     img_rgb = img.convert("RGB")
     pixels = numpy.array(img_rgb.getdata())
 
-    plt.subplot(121)
+    plt.figure(1)
+    plt.subplot(1, 2, 1)
+    plt.axis('off')
     plt.imshow(pixels.reshape((width, height, 3)))
 
     kmeans_centers = kmeans(pixels, clusters, epsilon)
 
+    for c in range(clusters):
+        plt.figure(2)
+        plt.subplot(1,clusters,c+1)
+        plt.axis('off')
+        plt.imshow(kmeans_centers[c].reshape((1, 1, 3)))
+
     pixels_compressed = compress(pixels, kmeans_centers)
 
-    plt.subplot(122)
+    plt.figure(1)
+    plt.subplot(1, 2, 2)
+    plt.axis('off')
     plt.imshow(pixels_compressed.reshape((width, height, 3)))
 
     plt.show()

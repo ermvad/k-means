@@ -22,7 +22,7 @@ def kmeans(data, cl, eps=1):
             for c in range(cl):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
-        new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
+        new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)], dtype=int)
         if numpy.mean(new_centers - centers) < eps:
             break
         centers = new_centers
@@ -45,7 +45,7 @@ def main():
     ax.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], kmeans_centers[:, 2], color='r')
     
     for i in range(kmeans_centers.shape[0]):
-        result = Image.new("RGB", (50,50), (int(kmeans_centers[i][0]), int(kmeans_centers[i][1]), int(kmeans_centers[i][2])))
+        result = Image.new("RGB", (50,50), (kmeans_centers[i][0], kmeans_centers[i][1], kmeans_centers[i][2]))
         result.show()
     plt.show()
             
