@@ -47,14 +47,14 @@ def main():
     img_rgb = img.convert("RGB")
     pixels = numpy.array(img_rgb.getdata())
 
-    plt.subplot(211)
+    plt.subplot(121)
     plt.imshow(pixels.reshape((width, height, 3)))
 
     kmeans_centers = kmeans(pixels, clusters, epsilon)
 
     pixels_compressed = compress(pixels, kmeans_centers)
 
-    plt.subplot(212)
+    plt.subplot(122)
     plt.imshow(pixels_compressed.reshape((width, height, 3)))
 
     plt.show()
