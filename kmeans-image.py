@@ -13,8 +13,7 @@ def euclidian(a, b):
 
 
 def kmeans(data, cl, eps=1):
-    centers = data[:cl]
-    centers += numpy.random.randint(0,10)
+    centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     while True:
         labels = numpy.zeros(data.shape[0])
         for d in range(data.shape[0]):
@@ -32,7 +31,7 @@ def kmeans(data, cl, eps=1):
 def main():
     numpy.random.seed()
     
-    img = Image.open("image.jpg")
+    img = Image.open("resource/image.jpg")
     img.show()
     img_rgb = img.convert("RGB")
     pixels = numpy.array(img_rgb.getdata())

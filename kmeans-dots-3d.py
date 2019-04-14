@@ -4,7 +4,7 @@ import csv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-filename = "dots_3d.csv"
+filename = "resource/dots_3d.csv"
 clusters = 3
 epsilon = 2
 
@@ -14,8 +14,7 @@ def euclidian(a, b):
 
 
 def kmeans(data, cl, eps=1):
-    centers = data[:cl]
-    
+    centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     while True:
         labels = numpy.zeros(data.shape[0])
         for d in range(data.shape[0]):

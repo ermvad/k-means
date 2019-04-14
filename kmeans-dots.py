@@ -3,7 +3,7 @@ import math
 import csv
 import matplotlib.pyplot as plt
 
-filename = "dots.csv"
+filename = "resource/dots.csv"
 clusters = 3
 epsilon = 2
 
@@ -13,8 +13,7 @@ def euclidian(a, b):
 
 
 def kmeans(data, cl, eps=1):
-    centers = data[:cl]
-    
+    centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     while True:
         labels = numpy.zeros(data.shape[0])
         for d in range(data.shape[0]):
