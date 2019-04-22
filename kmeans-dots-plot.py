@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 filename = "resource/dots.csv"
 clusters = 3
-epsilon = 1
+epsilon = 0.1
 
 
 def make_plot(d1, d2, i):
@@ -19,7 +19,7 @@ def euclidian(a, b):
     return math.sqrt(numpy.sum((a - b)**2))
 
 
-def kmeans(data, cl, eps=1):
+def kmeans(data, cl, eps=1.):
     iteration = 0
     centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     make_plot(data, centers, iteration)
@@ -32,7 +32,7 @@ def kmeans(data, cl, eps=1):
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
         iteration += 1
-        if numpy.mean(new_centers - centers) < eps:
+        if abs(numpy.sum(new_centers - centers)) < eps:
             make_plot(data, new_centers, iteration)
             break
         centers = new_centers

@@ -5,14 +5,14 @@ from PIL import Image
 from mpl_toolkits.mplot3d import Axes3D
 
 clusters = 3
-epsilon = 2
+epsilon = 0.1
 
 
 def euclidian(a, b):
     return math.sqrt(numpy.sum((a - b)**2))
 
 
-def kmeans(data, cl, eps=1):
+def kmeans(data, cl, eps=1.):
     centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     while True:
         labels = numpy.zeros(data.shape[0])
@@ -22,7 +22,7 @@ def kmeans(data, cl, eps=1):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)], dtype=int)
-        if numpy.mean(new_centers - centers) < eps:
+        if abs(numpy.sum(new_centers - centers)) < eps:
             break
         centers = new_centers
     return new_centers

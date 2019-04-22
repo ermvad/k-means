@@ -3,14 +3,14 @@ import math
 import matplotlib.pyplot as plt
 from PIL import Image
 clusters = 8
-epsilon = 2
+epsilon = 0.1
 
 
 def euclidian(a, b):
     return math.sqrt(numpy.sum((a - b)**2))
 
 
-def kmeans(data, cl, eps=1):
+def kmeans(data, cl, eps=1.):
     centers = numpy.random.permutation(numpy.unique(data, axis=0))[:cl]
     while True:
         labels = numpy.zeros(data.shape[0], dtype=int)
@@ -20,7 +20,7 @@ def kmeans(data, cl, eps=1):
                 e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(axis=0) for i in range(cl)], dtype=int)
-        if numpy.mean(new_centers - centers) < eps:
+        if numpy.all(new_centers==centers):
             break
         centers = new_centers
     return new_centers
@@ -38,7 +38,7 @@ def compress(img, centers):
 def main():
     numpy.random.seed()
     
-    img = Image.open("resource/image3.jpg")
+    img = Image.open("resource/image4.jpg")
     width, height = img.size
     img_rgb = img.convert("RGB")
     pixels = numpy.array(img_rgb.getdata())
