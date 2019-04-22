@@ -35,7 +35,7 @@ def main():
         reader = csv.reader(file)
         for row in reader:
             cords = numpy.append(cords, [[int(row[0]), int(row[1]), int(row[2])]], axis=0)
-    
+
     kmeans_centers = kmeans(cords, clusters, epsilon)
     fig = plt.figure()
     ax = Axes3D(fig)
