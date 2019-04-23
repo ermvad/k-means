@@ -20,7 +20,7 @@ def kmeans(data, cl, eps=1.):
         for d in range(data.shape[0]):
             e = numpy.zeros((0, 2))
             for c in range(cl):
-                e = numpy.append(e, [[euclidian(data[d,:], centers[c,:]), c]], axis=0)
+                e = numpy.append(e, [[euclidian(data[d, :], centers[c, :]), c]], axis=0)
             labels[d] = e[numpy.argmin(e[:, 0])][1]
         new_centers = numpy.array([data[labels == i, :].mean(0) for i in range(cl)])
         if abs(numpy.sum(new_centers - centers)) < eps:
@@ -35,7 +35,9 @@ def main():
         reader = csv.reader(file)
         for row in reader:
             cords = numpy.append(cords, [[int(row[0]), int(row[1]), int(row[2])]], axis=0)
+
     kmeans_centers = kmeans(cords, clusters, epsilon)
+
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.scatter(cords[:, 0], cords[:, 1], cords[:, 2], color='g')

@@ -2,10 +2,9 @@ import numpy
 import math
 import csv
 import matplotlib.pyplot as plt
-from sklearn.datasets.samples_generator import make_blobs
 
 filename = "resource/dots.csv"
-clusters = 4
+clusters = 3
 epsilon = 0.1
 
 
@@ -35,7 +34,6 @@ def main():
         reader = csv.reader(file)
         for row in reader:
             cords = numpy.append(cords, [[int(row[0]), int(row[1])]], axis=0)
-    cords,y = make_blobs(n_samples=300,centers=4,cluster_std=0.60,random_state=0)
     kmeans_centers = kmeans(cords, clusters, epsilon)
     plt.scatter(cords[:, 0], cords[:, 1], color='g')
     plt.scatter(kmeans_centers[:, 0], kmeans_centers[:, 1], color='r')
